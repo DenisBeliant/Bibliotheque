@@ -27,7 +27,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 // Route::get('/pret', 'PretController@show')->name('pret')->middleware('auth');
 
-Route::resource('pret', 'PretController');
-Route::resource('emprunts', 'EmpruntsController');
-Route::resource('emprunteur', 'EmprunteurController');
-Route::resource('livres', 'LivresController');
+Route::resource('pret', 'PretController')->middleware('auth');
+Route::resource('emprunts', 'EmpruntsController')->middleware('auth');
+Route::resource('emprunteur', 'EmprunteurController')->middleware('auth');
+Route::resource('livres', 'LivresController')->middleware('auth');
