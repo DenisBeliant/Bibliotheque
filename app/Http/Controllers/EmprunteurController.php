@@ -19,10 +19,11 @@ class EmprunteurController extends Controller
         
         // $emprunteurs = Emprunteurs::all()->sortBy('nom');
 
-        $emprunteurs = DB::table('emprunts')
-                        ->join('emprunteurs', 'emprunts.user_id', '=', 'emprunteurs.id')
-                        ->select(DB::raw('count(*) as nbEmprunt, user_id as id, nom, prenom, email, status'))
-                        ->groupBy('user_id', 'nom', 'prenom', 'email', 'status')
+        $emprunteurs = DB::table('emprunteurs')
+                        ->leftJoin('emprunts', 'emprunts.user_id', '=', 'emprunteurs.id')
+                        ->select(DB::raw('count(user_id) as nbEmprunt, user_id, emprunteurs.id, nom, prenom, email, status'))
+                        ->groupBy('user_id', 'nom', 'prenom', 'email', 'status', 'emprunteurs.id')
+                        ->orderBy('nbEmprunt', 'desc')
                         ->get();
 
         return view('emprunts', compact('emprunteurs'));
