@@ -76,7 +76,6 @@ class LivresController extends Controller
     public function update(LivreEditRequest $request, Livres $livre)
     {
         //
-        echo "test";
         $livre->update($request->all());
         return redirect('/livres');
     }

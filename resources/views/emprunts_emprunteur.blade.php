@@ -2,21 +2,23 @@
 
 @section('content')
 
-<p>
-    <a> Nom : {{$emprunteur['nom']}} </a>
-    <a> Prenom : {{$emprunteur['prenom']}} </a>
-</p>
+<div class="list-group">
+    <a class="list-group-item"> Nom : {{$emprunteur['nom']}} </a>
+    <a class="list-group-item"> Prenom : {{$emprunteur['prenom']}} </a>
+</div>
 
 <h1>Ses emprunts :</h1>
 
 @foreach($emprunts as $emp)
 
-<ul>
-    <li> Titre : {{$emp->titre}} </li>
-    <li> Date d'emprunts : {{$emp->date_location}}<li>
-    <li> Date de retour prévue : {{$emp->fin_location}}<li>
-    <a class="btn {{$emp->date_rendue == null ? 'btn-danger' : 'btn-success'}}">{{$emp->date_rendue == null ? 'A rendre' : 'Rendu'}}</a>
-</ul>
+<div class="list-group">
+    <a class="list-group-item"> Titre : {{$emp->titre}} </a>
+    <a class="list-group-item"> Date d'emprunts : {{$emp->date_location}}<a>
+    <a class="list-group-item"> Date de retour prévue : {{$emp->fin_location}}</a>
+    <a class="{{$emp->date_rendue == null ? 'disabled bg-red' : 'active'}} list-group-item">{{$emp->date_rendue == null ? 'A rendre' : 'Rendu'}}</a>
+</div>
+
+<br>
 
 @endforeach
 

@@ -2,10 +2,8 @@
 
 @section('content')
 
-{{-- <p>{{dd($emprunteurs)}}<p> --}}
-
 @foreach($emprunteurs as $emprunteur)
-{{-- <p>{{dd($emprunteur)}}<p> --}}
+
     <div class="row bg-white border     {{$emprunteur->status ? 'border-info' : 'border-danger'}} mb-2">
 
 
@@ -14,13 +12,10 @@
                     <p>{{$emprunteur->nom}}</p>
                     <p>{{$emprunteur->prenom}}</p>
                     <p>{{$emprunteur->email}}</p>
-                    {{-- <p>{{$emprunteur['telephone']}}</p> --}}
 
                 </div>
 
                 <div class="col">
-
-                    {{-- <img src="{{ $livre["photo"] }}"/> --}}
 
                 </div>
 
@@ -49,5 +44,8 @@
 </style>
 
 @endforeach
+
+<p>Personne n'a emprunté dans votre bibliothèque..</p>
+
 
 @endsection
