@@ -6,8 +6,17 @@ use Illuminate\Database\Eloquent\Model;
 
 class Emprunts extends Model
 {
-    //
-    public function emprunts() {
-        return $this->hasOne('App\User');
+
+    protected $fillable = [
+        'date_location', 'fin_location', 'date_rendue'
+    ];
+
+    public function emprunteur() {
+        return $this->hasOne(User::class, 'emprunts');
     }
+    
+    public function livre() {
+        return $this->hasOne(Livres::class, 'emprunts');
+    }
+
 }

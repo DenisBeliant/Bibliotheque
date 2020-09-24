@@ -20,12 +20,13 @@ class Emprunts extends Migration
                 ->on('emprunteurs')
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
-            $table->foreignId('livre_id')
+            $table->foreignId('livres_id')
                 ->on('livres')
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
             $table->dateTime('date_location');
             $table->dateTime('fin_location');
+            $table->dateTime('date_rendue')->nullable();
             $table->timestamps();
         });
     }

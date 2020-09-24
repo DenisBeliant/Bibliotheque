@@ -8,6 +8,7 @@ class Emprunteurs extends Model
 {
     //
     public function emprunter() {
-        return $this->hasMany(Livres::class);
+        return $this->hasMany(Emprunts::class, 'emprunts');
     }
+
 }

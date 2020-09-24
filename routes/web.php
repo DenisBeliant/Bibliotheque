@@ -21,4 +21,13 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::get('/livres', 'LivresController@index')->name('livres');
+// Route::get('/livres', 'LivresController@index')->name('livres')->middleware('auth');
+
+// Route::get('/emprunts', 'EmpruntsController@index')->name('emprunts')->middleware('auth');
+
+// Route::get('/pret', 'PretController@show')->name('pret')->middleware('auth');
+
+Route::resource('pret', 'PretController');
+Route::resource('emprunts', 'EmpruntsController');
+Route::resource('emprunteur', 'EmprunteurController');
+Route::resource('livres', 'LivresController');

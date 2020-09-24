@@ -21,15 +21,35 @@
 
                 </div>
 
-                <div class="col">
+            <div class="col">
 
+                @if($livre['stock'] > 0)
                     <div class="btn-group">
-                        <button id="emprunter" class="btn btn-success">
-                            Prêter
-                        </button>
+                        
+                        <a class="btn btn-success" href="{{ route('pret.show', $livre->id) }}">
+                                Prêter
+                        </a>
                     </div>
 
+                @else
+                <div class="btn-group">
+                        
+                    <a class="btn btn-danger">
+                            Prêter
+                    </a>
                 </div>
+
+                @endif
+
+                <div class="btn-group">
+
+                    <a class="btn btn-info" href="{{ route('livres.edit', $livre->id) }}">
+                        Editer
+                    </a>
+
+                </div>
+
+            </div>
 
     </div>
 

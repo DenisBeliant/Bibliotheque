@@ -24,6 +24,7 @@ class Emprunteurs extends Migration
             $table->rememberToken();
             $table->timestamps();
         });
+        
     }
 
     /**

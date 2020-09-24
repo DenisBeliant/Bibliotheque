@@ -5,7 +5,7 @@
 use App\Model;
 use Faker\Generator as Faker;
 
-$factory->define(Model::class, function (Faker $faker) {
+$factory->define(App\Emprunteurs::class, function (Faker $faker) {
     return [
         'nom' => $faker->name,
         'prenom' => $faker->lastName,

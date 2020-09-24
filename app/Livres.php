@@ -11,7 +11,8 @@ class Livres extends Model
         'titre', 'isbn', 'auteur', 'photo', 'stock'
     ];
 
-    public function users() {
-        return $this->hasOne(Emprunts::class);
+    public function livre() {
+        return $this;
     }
 }
+// ->hasMany(Emprunts::class)

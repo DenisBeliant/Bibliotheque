@@ -3,22 +3,23 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Http\Requests\LivreEditRequest;
-use App\Livres;
+use App\Http\Requests\EmpruntRequest;
+use Illuminate\Support\Facades\DB;
+use App\Emprunts;
+use App\Emprunteurs;
 
-class LivresController extends Controller
+class EmpruntsController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
+     * @param  int  $id
      */
     public function index()
     {
         //
-        $livres = Livres::all();
 
-        return view('Livres', compact('livres'));
     }
 
     /**
@@ -37,9 +38,20 @@ class LivresController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(EmpruntRequest $request)
     {
         //
+        $today = new \DateTime();
+        $after = new \DateTime();
+
+        DB::table('emprunts')
+            ->insert(['user_id' => $request['user'], 'livres_id' => $request['livre'], 'date_location' => $today, 'fin_location' => date_add($after, \date_interval_create_from_date_string("+ 5 days"))]);
+
+        DB::table('livres')
+            ->where('id', $request['livre'])
+            ->decrement('stock');
+            
+        return redirect('/livres');
     }
 
     /**
@@ -51,6 +63,17 @@ class LivresController extends Controller
     public function show($id)
     {
         //
+        $emprunteur = Emprunteurs::whereId($id)->get();
+
+        $emprunts = DB::table('emprunts')
+        ->join('livres', 'emprunts.livres_id', '=', 'livres.id')
+        ->select("*")
+        ->where('emprunts.user_id', "=", $id)
+        ->get();
+
+        $emprunteur = $emprunteur[0];
+        
+        return view('emprunts_emprunteur', compact('emprunteur', 'emprunts'));
     }
 
     /**
@@ -62,8 +85,6 @@ class LivresController extends Controller
     public function edit($id)
     {
         //
-        $livre = Livres::whereId($id)->first();
-        return view('edit_livre', compact('livre'));
     }
 
     /**
@@ -73,12 +94,9 @@ class LivresController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(LivreEditRequest $request, Livres $livre)
+    public function update(Request $request, $id)
     {
         //
-        echo "test";
-        $livre->update($request->all());
-        return redirect('/livres');
     }
 
     /**

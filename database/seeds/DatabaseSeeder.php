@@ -11,17 +11,19 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        // dd(factory(App\User::class)->make()->toArray());
         //$this->call(UsersTableSeeder::class);
         factory(App\User::class, 50)->create()->each(function ($user) {
-            $user->livres()->save(factory(App\User::class)->make());
+            $user->save(factory(App\User::class)->make()->toArray());
         });
 
         factory(App\Livres::class, 500)->create()->each(function ($user) {
-            $user->users()->save(factory(App\Livres::class)->make());
+            $user->livre()->save(factory(App\Livres::class)->make()->toArray());
         });
 
-        factory(App\Emprunts::class, 100)->create()->each(function ($data) {
-            $data->emprunter()->save(factory(App\Emprunteurs::class)->make());
+        factory(App\Emprunteurs::class, 50)->create()->each(function ($user) {
+            $user->save(factory(App\Emprunteurs::class)->make()->toArray());
         });
+
     }
 }

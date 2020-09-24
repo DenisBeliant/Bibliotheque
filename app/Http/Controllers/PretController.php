@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Http\Requests\LivreEditRequest;
 use App\Livres;
+use App\Emprunteurs;
 
-class LivresController extends Controller
+class PretController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,9 +16,7 @@ class LivresController extends Controller
     public function index()
     {
         //
-        $livres = Livres::all();
-
-        return view('Livres', compact('livres'));
+        
     }
 
     /**
@@ -29,6 +27,7 @@ class LivresController extends Controller
     public function create()
     {
         //
+
     }
 
     /**
@@ -48,9 +47,13 @@ class LivresController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($l)
     {
         //
+        $livre = Livres::whereId($l)->first();
+        $users = Emprunteurs::where('status', ">", 0)->get();
+
+        return view('pret', compact('livre', 'users'));
     }
 
     /**
@@ -62,8 +65,6 @@ class LivresController extends Controller
     public function edit($id)
     {
         //
-        $livre = Livres::whereId($id)->first();
-        return view('edit_livre', compact('livre'));
     }
 
     /**
@@ -73,12 +74,9 @@ class LivresController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(LivreEditRequest $request, Livres $livre)
+    public function update(Request $request, $id)
     {
         //
-        echo "test";
-        $livre->update($request->all());
-        return redirect('/livres');
     }
 
     /**

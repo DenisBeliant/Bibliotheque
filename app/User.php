@@ -16,7 +16,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'nom', 'prenom', 'email', 'password', 'telephone'
+        'nom', 'prenom', 'email', 'password'
     ];
 
     /**
@@ -37,7 +37,4 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function livres() {
-        return $this;
-    }
 }

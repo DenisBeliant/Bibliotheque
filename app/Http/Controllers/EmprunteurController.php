@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Http\Requests\LivreEditRequest;
-use App\Livres;
+use Illuminate\Support\Facades\DB;
+use App\Emprunteurs;
 
-class LivresController extends Controller
+class EmprunteurController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,9 +16,16 @@ class LivresController extends Controller
     public function index()
     {
         //
-        $livres = Livres::all();
+        
+        // $emprunteurs = Emprunteurs::all()->sortBy('nom');
 
-        return view('Livres', compact('livres'));
+        $emprunteurs = DB::table('emprunts')
+                        ->join('emprunteurs', 'emprunts.user_id', '=', 'emprunteurs.id')
+                        ->select(DB::raw('count(*) as nbEmprunt, user_id as id, nom, prenom, email, status'))
+                        ->groupBy('user_id', 'nom', 'prenom', 'email', 'status')
+                        ->get();
+
+        return view('emprunts', compact('emprunteurs'));
     }
 
     /**
@@ -62,8 +69,12 @@ class LivresController extends Controller
     public function edit($id)
     {
         //
-        $livre = Livres::whereId($id)->first();
-        return view('edit_livre', compact('livre'));
+        $status = DB::select("SELECT status FROM emprunteurs WHERE id = $id");
+
+        DB::table('emprunteurs')
+        ->where('id', $id)
+        ->update(['status' => $status[0]->status == 0 ? 1 : 0]);
+        return redirect('/emprunteur');
     }
 
     /**
@@ -73,12 +84,9 @@ class LivresController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(LivreEditRequest $request, Livres $livre)
+    public function update(Request $request, $id)
     {
         //
-        echo "test";
-        $livre->update($request->all());
-        return redirect('/livres');
     }
 
     /**
